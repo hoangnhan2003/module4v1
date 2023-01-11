@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/general/create">Create customer</a>
+<table border="1">
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Province</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <th:block th:each="customer : ${customerList}">
+        <tr>
+            <td th:text="${customer.firstName}"></td>
+            <td th:text="${customer.lastName}"></td>
+            <td th:if="${customer.province}" th:text="${customer.province.name}"></td>
+            <td th:unless="${customer.province}"></td>
+            <td><a th:href="@{/general/edit(customerId=${customer.codeCustomer})}">Edit</a></td>
+            <td><a th:href="@{/general/delete(customerId=${customer.codeCustomer}) }">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
+<div>
+    <a th:if="${customerList.hasPrevious()}" th:href="@{'/general'(page=${customerList.number -1})}"> Previous</a>
+    <span th:text="${customerList.number+1}"></span> / <span th:text="${customerList.totalPages}"></span>
+    <a th:if="${customerList.hasNext()}" th:href="@{'/general'(page=${customerList.number +1})}"> Next</a>
+</div>
+</body>
+</html>

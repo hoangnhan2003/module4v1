@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/student/edit" th:object="${student}">
+    <table>
+        <tr>
+            <td><input type="hidden" th:field="*{codeStudent}" ></td>
+        </tr>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" th:text="${student.nameStudent}" th:field="*{nameStudent}"></td>
+    </tr>
+        <tr>
+            <td>Gender</td>
+            <td><input type="text" th:text="${student.gender}" th:field="*{gender}"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

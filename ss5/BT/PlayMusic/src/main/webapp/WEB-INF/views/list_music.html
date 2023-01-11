@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/style.css">
+</head>
+<body>
+<a href="/music/create">Add new song</a>
+<table>
+    <tr>
+        <th>Name Song</th>
+        <th>Singer</th>
+        <th>Kind of music</th>
+        <th>Action</th>
+        <th>Action</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="song : ${songList}">
+        <td th:text="${song.songName}"></td>
+        <td th:text="${song.singer}"></td>
+        <td th:text="${song.kindOfMusic}"></td>
+        <td><a th:href="@{/music/delete/{songName}(songName = ${song.songName})}">Delete</a></td>
+        <td><a th:href="@{/music/edit/{songName}(songName = ${song.songName})}">Edit</a></td>
+        <td><audio controls>
+<!--            <source src="/resources/music/Lucky.mp3" type="audio/mpeg">-->
+            <source th:src="${song.filePath}" type="audio/mpeg">
+        </audio></td>
+
+    </tr>
+</table>
+</body>
+</html>

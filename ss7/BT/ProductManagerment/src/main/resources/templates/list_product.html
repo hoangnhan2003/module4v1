@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+<body>
+<a href="/product/create" class="btn btn-outline-info">Add new Product</a>
+<table class="table table-striped">
+    <tr>
+        <th>Product Code</th>
+        <th>Name</th>
+        <th>Detail</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <td>Delete</td>
+    </tr>
+    <tr th:each="prodcut:${productList}">
+        <td th:text="${prodcut.productCode}"></td>
+        <td th:text="${prodcut.productName}"></td>
+        <td><a th:href="@{'/product/detail'(productCode=${prodcut.productCode})}">Detail</a></td>
+        <td th:text="${prodcut.price}"></td>
+        <td><a th:href="@{product/edit(productCode=${prodcut.productCode})}">Edit</a></td>
+        <td><a th:href="@{product/delete(productCode=${prodcut.productCode})}">Delete</a></td>
+
+    </tr>
+</table>
+<a th:if="${productList.hasPrevious()}" th:href="@{/product(page=${productList.number -1})}">Previous</a>
+<a th:if="${productList.hasNext()}" th:href="@{/product(page=${productList.number +1})}">Next</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

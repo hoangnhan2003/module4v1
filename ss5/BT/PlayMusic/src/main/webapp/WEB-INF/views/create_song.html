@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/music/create" method="post" th:object="${song}">
+    <label>Song name</label>
+    <input type="text" th:field="*{songName}">
+    <label>singer</label>
+    <input type="text" th:field="*{singer}">
+    <label>kind of music</label>
+    <input type="text" th:field="*{kindOfMusic}">
+    <label>filePath</label>
+    <input type="text" th:field="*{filePath}">
+    <input type="submit">
+</form>
+</body>
+</html>
