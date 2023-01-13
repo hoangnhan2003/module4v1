@@ -57,7 +57,6 @@ public class SongRepository implements ISongRepository {
     }
 
     @Override
-    @Transactional
     public void update(Song song) {
         EntityTransaction entityTransaction = BaseRepository.entityManager.getTransaction();
         entityTransaction.begin();

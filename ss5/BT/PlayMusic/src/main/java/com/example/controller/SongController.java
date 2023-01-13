@@ -5,8 +5,11 @@ import com.example.service.ISongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("music")
@@ -24,9 +27,12 @@ public class SongController {
         return "create_song";
     }
     @PostMapping("/create")
-    public String addSong(@ModelAttribute("song")Song song, RedirectAttributes redirectAttributes){
+    public String addSong(@Valid @ModelAttribute("song")Song song, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            return "create_song";
+        }
         songService.save(song);
-//        redirectAttributes.addFlashAttribute("msg","Add song successful ");
+        redirectAttributes.addFlashAttribute("msg","Add song successful ");
         return "redirect:/music";
     }
     @GetMapping("/delete/{songName}")

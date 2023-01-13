@@ -1,15 +1,26 @@
 package com.example.model;
 
+import org.springframework.stereotype.Service;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table
 public class Song {
     @Id
+    @Size(max = 300,message = "max length 50 characters")
+    @NotEmpty(message = "song name mustn't null")
     private String songName;
+    @Size(min = 1,max = 100,message = "max length 100 characters")
+    @NotBlank(message = "singer is not blank")
     private String singer;
+
     private String kindOfMusic;
     private String filePath;
 

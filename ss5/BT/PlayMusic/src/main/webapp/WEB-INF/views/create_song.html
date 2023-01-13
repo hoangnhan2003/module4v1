@@ -8,8 +8,10 @@
 
 <form action="/music/create" method="post" th:object="${song}">
     <label>Song name</label>
+    <p style="color: red" th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}"></p>
     <input type="text" th:field="*{songName}">
     <label>singer</label>
+    <p style="color: red" th:if="${#fields.hasErrors('singer')}" th:errors="*{singer}"></p>
     <input type="text" th:field="*{singer}">
     <label>kind of music</label>
     <input type="text" th:field="*{kindOfMusic}">
