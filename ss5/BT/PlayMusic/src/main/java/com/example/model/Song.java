@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @Table
@@ -19,7 +16,10 @@ public class Song {
     private String songName;
     @Size(min = 1,max = 100,message = "max length 100 characters")
     @NotBlank(message = "singer is not blank")
+    @Pattern(regexp = "/[^a-zA-Z0-9,]+$",message = "Not accept special character!!")
     private String singer;
+
+    @Pattern(regexp = "/[^a-zA-Z0-9,]+/','",message = "Not accept special character!!")
 
     private String kindOfMusic;
     private String filePath;
