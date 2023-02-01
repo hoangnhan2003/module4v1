@@ -8,8 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("product")
@@ -28,7 +31,11 @@ public class ProductController {
         return "create_product";
     }
     @PostMapping("/create")
-    public String addProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes){
+    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            return "create_product";
+        }
         productService.save(product);
         redirectAttributes.addFlashAttribute("msg","Add product success");
         return "redirect:/product";

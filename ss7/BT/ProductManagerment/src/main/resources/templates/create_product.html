@@ -10,18 +10,23 @@
 <form action="/product/create" method="post" th:object="${product}">
     <div class="mb-3">
         <label for="exampleFormControlInput0" class="form-label">Product code</label>
+
         <input type="number" class="form-control" id="exampleFormControlInput0" placeholder="Apple" th:field="*{productCode}">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Product name</label>
+        <p style="color: red" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"></p>
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Apple" th:field="*{productName}">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+        <p style="color: red" th:if="${#fields.hasErrors('productDT')}" th:errors="*{productDT}"></p>
+
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" th:field="*{productDT}"></textarea>
     </div>
     <div class="mb-3">
         <label  class="form-label">price</label>
+        <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
         <input type="number" class="form-control"  placeholder="5000đ" th:field="*{price}">
     </div>
     <input type="submit">

@@ -1,15 +1,24 @@
 package com.example.productmanagerment.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long productCode;
+    @NotBlank(message = "Product name is not null!!!")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$",message = "Product name isn't contain special character!!")
     private String productName;
     @Column(columnDefinition = "text")
+    @NotBlank(message = "Product detail is not blank!!!")
     private String productDT;
+    @Min(value = 1,message = "Price must be higher than 0!!")
     private Float price;
 
     public Product() {
