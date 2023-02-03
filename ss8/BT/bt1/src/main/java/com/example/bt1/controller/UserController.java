@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @RequestMapping("user")
 public class UserController {
     @Autowired
-    IUserService userService;
+    private IUserService userService;
     @GetMapping("")
     public String showUserList(@PageableDefault(value = 4)Pageable pageable, Model model){
         Page<User> userPage = userService.findAll(pageable);
