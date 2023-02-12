@@ -107,7 +107,9 @@
 <body>
 <h1>Book list</h1>
 <a href="/book_store/create_new_book"> Create new book</a><br>
-<a href="/book_store/showAllBorrowBook"> Display all book borrowed</a>
+<a href="/book_store/showAllBorrowBook"> Display all book borrowed</a><br>
+<a href="/book_store/showAllHistory">Show history</a>
+
 <table class="rwd-table" th:object="${bookList}">
     <tr>
         <th>Book Title</th>
@@ -129,7 +131,8 @@
         </td>
     </tr>
 </table>
-
+<a th:if="${bookList.hasPrevious()}" th:href="@{/book_store(page=${bookList.number -1})}">Previous</a>
+<a th:if="${bookList.hasNext()}" th:href="@{/book_store(page=${bookList.number +1})}">Next</a>
 
 </body>
 </html>

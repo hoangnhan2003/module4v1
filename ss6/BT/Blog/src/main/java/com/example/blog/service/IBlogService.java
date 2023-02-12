@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface IBlogService {
     Page<Blog> getAll(Pageable pageable);
+    List<Blog> getAll();
+    List<Blog> findAllBlogByTitle(String title);
+    Blog saveBlog(Blog blog);
     Blog findByTitle(String title);
     Blog findByCodeBlog(String codeBlog);
     void save(Blog blog);
@@ -16,4 +19,5 @@ public interface IBlogService {
     void update(Blog blog);
     Page<Blog> findAllByTitle(Pageable pageable,String title);
     Page<Blog> findAllByAuthor(Pageable pageable,String author);
+
 }

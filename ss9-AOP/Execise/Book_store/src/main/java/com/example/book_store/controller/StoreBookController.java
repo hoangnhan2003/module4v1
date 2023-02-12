@@ -2,8 +2,10 @@ package com.example.book_store.controller;
 
 import com.example.book_store.model.Book;
 import com.example.book_store.model.Contract;
+import com.example.book_store.model.History;
 import com.example.book_store.service.IBookService;
 import com.example.book_store.service.IContractService;
+import com.example.book_store.service.IHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,8 @@ public class StoreBookController {
     private IBookService bookService;
     @Autowired
     private IContractService contractService;
+    @Autowired
+    private IHistoryService historyService;
     @GetMapping("")
     public String showAllBook(@PageableDefault(value = 10) Pageable pageable, Model model){
         model.addAttribute("bookList",bookService.getAll(pageable));
@@ -65,6 +69,12 @@ public class StoreBookController {
         Page<Contract> contractPage = contractService.getAll(pageable);
         model.addAttribute("contractList",contractPage);
         return "contract_display";
+    }
+    @GetMapping("showAllHistory")
+    public String showAllHistory(@PageableDefault(value = 20) Pageable pageable,Model model){
+        Page<History> historyPage = historyService.getAll(pageable);
+        model.addAttribute("historyList",historyPage);
+        return "show_history";
     }
     @GetMapping("/return_book")
     public String returnBook(@RequestParam("contractCode") Long contractCode,Model model,

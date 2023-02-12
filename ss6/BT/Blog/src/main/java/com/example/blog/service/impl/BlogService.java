@@ -16,12 +16,28 @@ import java.util.List;
 @Service
 public class BlogService implements IBlogService {
     @Autowired
-    IBlogRepository blogRepository;
+    private IBlogRepository blogRepository;
 
     @Override
     public Page<Blog> getAll(Pageable pageable) {
         Page<Blog> blogList = blogRepository.findAll(pageable);
         return blogList;
+    }
+
+    @Override
+    public List<Blog> getAll() {
+        return blogRepository.findAll();
+    }
+
+    @Override
+    public List<Blog> findAllBlogByTitle(String title) {
+        List<Blog> blogList =  blogRepository.findBlogsByTitleLike(title);
+        return blogList;
+    }
+
+    @Override
+    public Blog saveBlog(Blog blog) {
+        return blogRepository.save(blog);
     }
 
     @Override
