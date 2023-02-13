@@ -18,16 +18,18 @@
       <th>Quantity</th>
       <th>Action</th>
       <th>Action</th>
+      <th>Action</th>
       <th>Price</th>
 
     </tr>
-    <tr th:each="product: ${cart.products}">
+    <tr th:each="product: ${cart.products}" th:if="${product.getValue() >= 0}">
       <td th:text="${product.getKey().name}"></td>
       <td>
         <span th:text="${product.getValue()}" ></span>
       </td>
-      <td> <a id="decrease_button" th:href="@{/sub/__${product.getKey().id}__(action='show')}">-</a></td>
-      <td><a id="increase_button" th:href="@{/add/__${product.getKey().id}__(action='show')}">+</a></td>
+      <td> <a id="decrease_button" th:href="@{/sub/__${product.getKey().id}__(action='show')}">decrease</a></td>
+      <td><a id="increase_button" th:href="@{/add/__${product.getKey().id}__(action='show')}">increase</a></td>
+      <td><a id="delete_button" th:href="@{/delete/__${product.getKey().id}__(action='show')}">delete</a></td>
       <td th:text="${product.getKey().price}"></td>
     </tr>
     <tr>

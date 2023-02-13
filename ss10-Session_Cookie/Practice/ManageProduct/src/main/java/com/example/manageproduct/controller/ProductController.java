@@ -54,4 +54,13 @@ public class ProductController {
         cart.subProduct(productOptional.get());
         return "redirect:/shop";
     }
+    @GetMapping("delete/{id}")
+    public String deleteProductInCart(@PathVariable Long id,@ModelAttribute Cart cart){
+        Optional<Product> product = productService.findById(id);
+        if(!product.isPresent()){
+            return "/error.404";
+        }
+        cart.deleteProduct(product.get());
+        return "redirect:/shopping-cart";
+    }
 }
