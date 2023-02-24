@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+
+        .rwd-table {
+            margin: 1em 0;
+            min-width: 300px;
+        }
+
+        .rwd-table tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .rwd-table th {
+            display: none;
+        }
+
+        .rwd-table td {
+            display: block;
+        }
+
+        .rwd-table td:first-child {
+            padding-top: 0.5em;
+        }
+
+        .rwd-table td:last-child {
+            padding-bottom: 0.5em;
+        }
+
+        .rwd-table td:before {
+            content: attr(data-th) ": ";
+            font-weight: bold;
+            width: 6.5em;
+            display: inline-block;
+        }
+
+        @media (min-width: 480px) {
+            .rwd-table td:before {
+                display: none;
+            }
+        }
+
+        .rwd-table th,
+        .rwd-table td {
+            text-align: left;
+        }
+
+        @media (min-width: 480px) {
+            .rwd-table th,
+            .rwd-table td {
+                display: table-cell;
+                padding: 0.25em 0.5em;
+            }
+
+            .rwd-table th:first-child,
+            .rwd-table td:first-child {
+                padding-left: 0;
+            }
+
+            .rwd-table th:last-child,
+            .rwd-table td:last-child {
+                padding-right: 0;
+            }
+        }
+
+        body {
+            padding: 0 2em;
+            font-family: Montserrat, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            color: #444;
+            background: #eee;
+        }
+
+        h1 {
+            font-weight: normal;
+            letter-spacing: -1px;
+            color: #34495e;
+        }
+
+        .rwd-table {
+            background: #34495e;
+            color: #fff;
+            border-radius: 0.4em;
+            overflow: hidden;
+        }
+
+        .rwd-table tr {
+            border-color: #46637f;
+        }
+
+        .rwd-table th,
+        .rwd-table td {
+            margin: 0.5em 1em;
+        }
+
+        @media (min-width: 480px) {
+            .rwd-table th,
+            .rwd-table td {
+                padding: 1em !important;
+            }
+        }
+
+        .rwd-table th,
+        .rwd-table td:before {
+            color: #dd5;
+        }
+
+    </style>
+    <!--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+
+</head>
+<body>
+<form id="add-smartphone">
+    <table>
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" id="producer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" id="model" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+        </tr>
+    </table>
+</form>
+<form id="edit-smartphone">
+    <table>
+        <tr>
+            <td>Id:</td>
+            <td><input type="text" id="editId" placeholder="Id"></td>
+        </tr>
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" id="editProducer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" id="editModel" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="editPrice" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="button" value="Add" onclick="editSmartPhone()">Edit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<input type="text" id="searchByModelName" placeholder="model name">
+<button onclick="findAllByModel()">Search</button>
+<h1>RWD List to Table</h1>
+<table class="rwd-table" id="smartphoneList">
+    <tr>
+        <th>ID</th>
+        <th>Producer</th>
+        <th>Model</th>
+        <th>Price</th>
+    </tr>
+    <tr th:each="phone:${phones}">
+        <td data-th="Movie Title" th:text="${phone.id}"></td>
+        <td data-th="Genre" th:text="${phone.producer}"></td>
+        <td data-th="Year" th:text="${phone.model}"></td>
+        <td data-th="Gross" th:text="${phone.price}"></td>
+        <td data-th="Gross">
+            <a class="deleteSmartphone" th:onclick="deleteSmart(${smartphone.id})"  style="text-decoration: none; cursor: pointer">Delete</a>
+        </td>
+
+    </tr>
+
+</table>
+
+<p>&larr; Drag window (in editor or full page view) to see the effect. &rarr;</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    function addNewSmartPhone() {
+        //lay du lieu
+
+        let producer = $('#producer').val();
+        let model = $('#model').val();
+        let price = $('#price').val();
+        let newSmartphone = {
+            producer: producer,
+            model: model,
+            price: price
+        };
+
+        // goi ajax
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(newSmartphone),
+            //tên API
+            url: "/smartPhones",
+            //xử lý khi thành công
+
+            success: successHandler
+
+        });
+        //chặn sự kiện mặc định của thẻ
+        event.preventDefault();
+    }
+
+    function getSmartphone(smartphone) {
+        return `<tr>
+                    <td data-th="Movie Title">${smartphone.id}</td>
+                    <td data-th="Genre">${smartphone.producer}</td>
+                    <td data-th="Year">${smartphone.model}</td>
+                    <td data-th="Gross">${smartphone.price}</td>` + `<td>
+                    <a class="deleteSmartphone" onclick="deleteSmart(${smartphone.id})" style="text-decoration: none; cursor: pointer; color: #f1a32b; font-weight: bold">Delete</a>
+                    </td>
+                    </tr>`;
+    }
+
+    function successHandler() {
+        $.ajax({
+            type: "GET",
+            //tên API
+            url: "/smartPhones",
+            //xử lý khi thành công
+            success: function (data) {
+                // hien thi danh sach o day
+                let content = '    <tr>\n' +
+                    '        <td>ID</td>\n' +
+                    '        <td>Producer</td>\n' +
+                    '        <td>Model</td>\n' +
+                    '        <td>Price</td>\n' +
+                    '        <td></td>\n' +
+                    '    </tr>';
+                for (let i = 0; i < data.length; i++) {
+                    content += getSmartphone(data[i]);
+                }
+                document.getElementById('smartphoneList').innerHTML = content;
+            }
+        });
+    }
+
+
+        //sư kiện nào thực hiện Ajax
+    function deleteSmart(smartphoneId) {
+        debugger
+            //lay du lieu
+
+            // goi ajax
+            $.ajax({
+                type: "DELETE",
+                //tên API
+                url: `/smartPhones/${smartphoneId}`,
+                //xử lý khi thành công
+                success: successHandler
+
+            });
+            //chặn sự kiện mặc định của thẻ
+            event.preventDefault();
+    }
+
+
+
+    function findAllByModel() {
+        let modelName = $('#searchByModelName').val();
+        $.ajax({
+            type: "GET",
+            url: "/smartPhones/findByModel?modelName=" + `${modelName}`,
+            success: function (data) {
+                let content = '    <tr>\n' +
+                    '        <td>ID</td>\n' +
+                    '        <td>Producer</td>\n' +
+                    '        <td>Model</td>\n' +
+                    '        <td>Price</td>\n' +
+                    '        <td></td>\n' +
+                    '    </tr>';
+                for (let i = 0; i < data.length; i++) {
+                    content += getSmartphone(data[i]);
+                }
+                document.getElementById('smartphoneList').innerHTML = content;
+            }
+        })
+    }
+
+    function editSmartPhone() {
+
+        let idPhone = $('#editId').val();
+        let editProducer = $('#editProducer').val();
+        let editModel = $('#editModel').val();
+        let editPrice = $('#editPrice').val();
+        let smartPhone = {
+            id: idPhone,
+            producer: editProducer,
+            model: editModel,
+            price: editPrice
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(smartPhone),
+            url: "/smartPhones/editPhone",
+            success: successHandler
+        })
+
+    }
+
+</script>
+</body>
+</html>

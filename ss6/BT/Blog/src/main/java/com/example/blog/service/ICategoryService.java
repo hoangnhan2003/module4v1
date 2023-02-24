@@ -8,4 +8,5 @@ import java.util.*;
 public interface ICategoryService {
     Page<Category> findAll(Pageable pageable);
     List<Category> findAll();
+    Category findById(Long id);
 }

@@ -6,7 +6,8 @@ import javax.persistence.*;
 @Table
 public class Blog {
     @Id
-    private String codeBlog;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long codeBlog;
     private String author;
     private String title;
     @Column(columnDefinition = "text")
@@ -24,7 +25,7 @@ public class Blog {
         this.category = category;
     }
 
-    public Blog(String codeBlog, String author, String title, String content, String subject, Category category) {
+    public Blog(Long codeBlog, String author, String title, String content, String subject, Category category) {
         this.codeBlog = codeBlog;
         this.author = author;
         this.title = title;
@@ -33,7 +34,7 @@ public class Blog {
         this.category = category;
     }
 
-    public Blog(String codeBlog, String author, String title, String content, String subject) {
+    public Blog(Long codeBlog, String author, String title, String content, String subject) {
         this.codeBlog = codeBlog;
         this.author = author;
         this.title = title;
@@ -44,7 +45,7 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(String codeBlog, String author, String title, String content) {
+    public Blog(Long codeBlog, String author, String title, String content) {
         this.codeBlog = codeBlog;
         this.author = author;
         this.title = title;
@@ -59,11 +60,11 @@ public class Blog {
         this.subject = subject;
     }
 
-    public String getCodeBlog() {
+    public Long getCodeBlog() {
         return codeBlog;
     }
 
-    public void setCodeBlog(String codeBlog) {
+    public void setCodeBlog(Long codeBlog) {
         this.codeBlog = codeBlog;
     }
 

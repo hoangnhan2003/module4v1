@@ -46,7 +46,7 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public Blog findByCodeBlog(String codeBlog) {
+    public Blog findByCodeBlog(Long codeBlog) {
         return blogRepository.findBlogByCodeBlog(codeBlog);
     }
 
@@ -56,7 +56,7 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public void delete(String codeBlog) {
+    public void delete(Long codeBlog) {
         blogRepository.deleteByCodeBlog(codeBlog);
     }
 
@@ -73,5 +73,10 @@ public class BlogService implements IBlogService {
     @Override
     public Page<Blog> findAllByAuthor(Pageable pageable, String author) {
         return blogRepository.findAllByAuthorLike(pageable,"%"+author+"%");
+    }
+
+    @Override
+    public List<Blog> findAllByTitleLike(String title) {
+        return blogRepository.findBlogsByTitleLike(title);
     }
 }

@@ -17,14 +17,15 @@ import javax.transaction.Transactional;
 @Repository
 public interface IBlogRepository extends JpaRepository<Blog,String> {
     Blog findBlogByTitle(String title);
-    Blog findBlogByCodeBlog(String codeBlog);
+    Blog findBlogByCodeBlog(Long codeBlog);
     @Query(value = "SELECT * from Blog where title like %:title%",nativeQuery = true)
     List<Blog> findBlogsByTitleLike(@Param("title") String title);
 
     Page<Blog> findAllByTitleLike(Pageable pageable,String title);
     Page<Blog> findAllByAuthorLike(Pageable pageable,String author);
+    List<Blog> findAllByTitleLike(String title);
 
-    void deleteByCodeBlog(String codeBlog);
+    void deleteByCodeBlog(Long codeBlog);
 
 
 }

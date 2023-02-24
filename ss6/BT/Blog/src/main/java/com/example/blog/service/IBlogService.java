@@ -13,11 +13,12 @@ public interface IBlogService {
     List<Blog> findAllBlogByTitle(String title);
     Blog saveBlog(Blog blog);
     Blog findByTitle(String title);
-    Blog findByCodeBlog(String codeBlog);
+    Blog findByCodeBlog(Long codeBlog);
     void save(Blog blog);
-    void delete(String codeBlog);
+    void delete(Long codeBlog);
     void update(Blog blog);
     Page<Blog> findAllByTitle(Pageable pageable,String title);
     Page<Blog> findAllByAuthor(Pageable pageable,String author);
+    List<Blog> findAllByTitleLike(String title);
 
 }
